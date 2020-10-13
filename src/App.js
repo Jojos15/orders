@@ -3,6 +3,7 @@ import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import api from './api/api'
+import weskglogo from './img/weskglogo.png'
 
 function App() {
 
@@ -11,9 +12,9 @@ function App() {
   const [password, setPassword] = useState("");
 
   const login = async () => {
-    api.post('/users/login', {username: username, password: password})
+    api.post('/users/login', { username: username, password: password })
       .then((response) => {
-        if(response.status === 200){
+        if (response.status === 200) {
           localStorage.setItem('auth-token', JSON.stringify(response.data));
           console.log("ΣΟΥΞΕ");
         }
@@ -27,9 +28,11 @@ function App() {
 
     let authToken = JSON.parse(localStorage.getItem('auth-token'));
 
-    api.get('/users', { headers: {
-      'auth-token': authToken
-    }})
+    api.get('/users', {
+      headers: {
+        'auth-token': authToken
+      }
+    })
       .then((response) => {
         if (response.status === 200) {
           setUsers(response.data)
@@ -41,16 +44,12 @@ function App() {
       })
   }
 
-  const btnTestHandler = (e) => {
-    getUsers();
-  };
-
   const btnLoginHandler = (e) => {
     login();
   };
 
   const usernameHandler = (e) => {
-    setUsername(e.target.value);  
+    setUsername(e.target.value);
   };
 
   const passwordHandler = (e) => {
@@ -59,20 +58,16 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="title">Hello Reasct</h1>
-      <h3 className="title">Login</h3>
+      {/* <div className="content"> */}
+      <img src={weskglogo} alt="WESKG" className="loginlogo" />
+      <h3 className="title">Orders Login</h3>
       <form className="input" noValidate autoComplete="off">
         <TextField onChange={usernameHandler} value={username} id="standard-basic" label="Username" className="textfield" />
         <TextField onChange={passwordHandler} value={password} id="standard-basic" label="Password" className="textfield" />
-        <Button onClick={btnLoginHandler} style={{ marginTop: 20 }} variant="contained" color="primary">Login</Button>
-        <Button onClick={btnTestHandler} style={{ marginTop: 20 }} variant="contained" color="primary">Y+TEST</Button>
-        {users.map( u => {
-            return(
-              <h1 key={u._id} className="name">{u.username + " " + u.email}</h1>
-            );
-        })}
+        <Button onClick={btnLoginHandler} variant="contained" color="primary" className="btn">Login</Button>
       </form>
     </div>
+    //</div>
   );
 }
 

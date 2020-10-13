@@ -1,14 +1,50 @@
-.App{
-    height: 100vh;
-    width: 100vh;
-    margin: auto;
+#root{
+   background-color: black;
 }
 
-.input{
-    display: flex;
-    flex-direction: column;
+.App{
+    border: black;
+    background-color: white;
+    border-radius: 10px;
+    height: 100vh;
+    width: 100vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+    grid-template-rows: 1fr 1fr 10fr;
+    justify-items: center;
+    align-items: center;
+    
+}
+
+.loginlogo{
+    margin: 10px;
+    grid-column: 2/3;
+    grid-row: 1/2;
 }
 
 .title{
     text-align: center;
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+.textfield{
+    width: 100%;
+}
+
+.input{
+    grid-column: 2/3;
+    grid-row: 3/4;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.btn{
+    width: 50%;
+    justify-self: center;
 }
