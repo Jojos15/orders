@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import api from '../api/api'
 import weskglogo from '../img/weskglogo.png'
-import Grid from '@material-ui/core/Grid';
 
 const Login = () => {
 
