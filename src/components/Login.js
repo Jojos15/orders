@@ -1,41 +1,19 @@
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import api from '../api/api'
 import weskglogo from '../img/weskglogo.png'
 
 const Login = () => {
 
-    const [users, setUsers] = useState([]);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const login = async () => {
+        console.log({ username, password });
         api.post('/users/login', { username: username, password: password })
             .then((response) => {
                 if (response.status === 200) {
                     localStorage.setItem('auth-token', JSON.stringify(response.data));
-                    console.log("ΣΟΥΞΕ");
-                }
-            })
-            .catch(e => {
-                console.log(e)
-            })
-    }
-
-    const getUsers = async () => {
-
-        let authToken = JSON.parse(localStorage.getItem('auth-token'));
-
-        api.get('/users', {
-            headers: {
-                'auth-token': authToken
-            }
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    setUsers(response.data)
-                    console.log("ΣΟΥΞΕ 2");
+                    console.log(response.message);
                 }
             })
             .catch(e => {
@@ -44,6 +22,7 @@ const Login = () => {
     }
 
     const btnLoginHandler = (e) => {
+        e.preventDefault();
         login();
     };
 
@@ -57,28 +36,30 @@ const Login = () => {
 
     return (
         <div className="col-12">
-            <div className="row justify-content-center">
+            <div className="row align-items-center justify-content-center mt-2">
                 <div className="col-md-6 col-12 text-center">
-                    <img src={weskglogo} alt="WESKG" className="loginlogo" />
+                    <img src={weskglogo} alt="WESKG" className="img-fluid logoimg" />
                 </div>
             </div>
-            <div className="row justify-content-center">
-                <h2 className="col-6 col-md-3 text-center">Orders Login</h2>
+            <div className="row justify-content-center mt-2">
+                <h2 className="col-6 col-md-3 text-center">Login</h2>
             </div>
-            <form noValidate autoComplete="off">
-                <div className="row justify-content-center align-content-stretch">
-                    <div className="col-md-4 col-8 text-center">
-                        <TextField className="w-100" onChange={usernameHandler} value={username} id="standard-basic" label="Username" />
+            <form>
+                <div className="row justify-content-center">
+                    <div className="form-group col-md-4 col-lg-3 col-8">
+                        <label htmlFor="exampleInputEmail1">Username</label>
+                        <input type="text" className="form-control" onChange={usernameHandler} />
                     </div>
                 </div>
                 <div className="row justify-content-center">
-                    <div className="col-md-4 col-8 text-center">
-                        <TextField className="w-100" onChange={passwordHandler} value={password} id="standard-basic" label="Password" />
+                    <div className="form-group col-md-4 col-lg-3 col-8">
+                        <label htmlFor="exampleInputPassword1">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1" onChange={passwordHandler} />
                     </div>
                 </div>
-                <div className="row justify-content-center">
-                    <div className="col-6 col-md-3 text-center">
-                        <Button className="w-100" onClick={btnLoginHandler} onSubmit={btnLoginHandler} type="submit" variant="contained" color="primary">Login</Button>
+                <div className="row justify-content-center mt-2">
+                    <div className="col-md-3 col-4">
+                        <button type="submit" className="btn btn-primary btn-lg btn-block" onClick={btnLoginHandler}>Log In</button>
                     </div>
                 </div>
             </form>
